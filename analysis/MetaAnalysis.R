@@ -1,6 +1,6 @@
 ###### 1. Change working directory to project folder
-# setwd("~/GroundsRenovation")
-setwd("C:\\Users\\hp39wasi\\GroundsRenovation")
+#setwd("~/GroundsRenovation")
+setwd("C:/Users/vburt/Documents/naturepark/HelenMetaAnalysis/GroundsRenovation")
 ## In column headings:
 ## "Current" always refers to estimates of the grounds as they are now
 ## "Proposed" refer to grounds estimates after renovation
@@ -36,6 +36,8 @@ simpleCap <- function(x) {
 #################
 ## Libraries
 #################
+
+install.packages(c("maps", "maptools", "MuMin", "Hmisc", "Tidyverse"))
 
 library(lme4)
 library(maps)
