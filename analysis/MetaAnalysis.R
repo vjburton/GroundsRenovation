@@ -1,6 +1,6 @@
 ###### 1. Change working directory to project folder
 #setwd("~/GroundsRenovation")
-setwd("C:/Users/vburt/Documents/naturepark/HelenMetaAnalysis/GroundsRenovation")
+#setwd("C:/Users/victb/Documents/naturepark/GroundsRenovation")
 ## In column headings:
 ## "Current" always refers to estimates of the grounds as they are now
 ## "Proposed" refer to grounds estimates after renovation
@@ -37,12 +37,12 @@ simpleCap <- function(x) {
 ## Libraries
 #################
 
-install.packages(c("maps", "maptools", "MuMin", "Hmisc", "Tidyverse"))
+#install.packages(c("MuMin", "Hmisc"))
 
 library(lme4)
-library(maps)
-library(mapdata)
-library(maptools)
+#library(maps)
+#library(mapdata)
+#library(maptools)
 library(MuMIn)
 library(dplyr)
 library(car)
@@ -274,7 +274,7 @@ habitat_areas[nrow(habitat_areas), c(2: 12)] <- colSums(habitat_areas[1:nrow(hab
 habitat_areas$Current_area_m2[nrow(habitat_areas)] <- totalCurrent
 habitat_areas$Proposed_area_m2[nrow(habitat_areas)] <- totalProposed
 
-# write.csv(habitat_areas, file = "Habitat_totals.csv", row.names = FALSE)
+write.csv(habitat_areas, file = "Habitat_totals.csv", row.names = FALSE)
 
 ## Percent change
 # Species density scaled
@@ -393,7 +393,7 @@ prop <- richness_areas$Proposed_Weighted_richness[nrow(richness_areas)]
 
 ((prop - curr)/curr) *100
 
-# write.csv(richness_areas, file = "/Habitat_totals_richness.csv", row.names = FALSE)
+write.csv(richness_areas, file = "richness.csv", row.names = FALSE)
 
 
 #################
@@ -435,27 +435,26 @@ prop <- richness_areas$Proposed_Weighted_richness[nrow(richness_areas)]
 	
  dev.off()
 
-
 #################
 ## MAP
 #################
-studies_used <- unique(density3@frame$Study.ID)
-canada <- c("2011_MacIvor 1", "2011_MacIvor 2")
-studies_used <- studies_used[!(studies_used %in% canada)]
-studies_modelled <- garden[garden$Study.ID %in% studies_used,]
+# studies_used <- unique(density3@frame$Study.ID)
+# canada <- c("2011_MacIvor 1", "2011_MacIvor 2")
+# studies_used <- studies_used[!(studies_used %in% canada)]
+# studies_modelled <- garden[garden$Study.ID %in% studies_used,]
 
-coord<-aggregate(cbind(studies_modelled$long, studies_modelled$lat), list(studies_modelled$Study.ID), max)
-coord$X<-coord$Group.1
-coord<-coord[2:4]
-names(coord)<-c("Long", "Lat", "X")
-dsSPDF<-SpatialPointsDataFrame(coord[,1:2], data.frame(coord[,1:3]))
-proj4string(dsSPDF)<-CRS("+proj=longlat")
+# coord<-aggregate(cbind(studies_modelled$long, studies_modelled$lat), list(studies_modelled$Study.ID), max)
+# coord$X<-coord$Group.1
+# coord<-coord[2:4]
+# names(coord)<-c("Long", "Lat", "X")
+# dsSPDF<-SpatialPointsDataFrame(coord[,1:2], data.frame(coord[,1:3]))
+# proj4string(dsSPDF)<-CRS("+proj=longlat")
 
- pdf(file.path(figure_out, "Map_ModelledStudes.pdf"), pointsize=11, width = 2.4, height = 5)
-	 par(mar=c(0, 0, 0, 0))
-	 map('worldHires', c("UK"),border=0,fill=TRUE, col="lightgrey",  xlim=c(-8.1,2), ylim=c(49,60.9), mar = c(0, 0, 0, 0))
-	 points(dsSPDF, col="black", bg="black", cex= 1.5, pch=19)
-	 maps:::map.scale(y=57, x=-1, ratio=FALSE, cex = 0.7, srt = 310)  
-	 north.arrow(xb=-0.2, yb=58, len=0.1, lab="N")
- dev.off()
+#  pdf(file.path(figure_out, "Map_ModelledStudes.pdf"), pointsize=11, width = 2.4, height = 5)
+# 	 par(mar=c(0, 0, 0, 0))
+# 	 map('worldHires', c("UK"),border=0,fill=TRUE, col="lightgrey",  xlim=c(-8.1,2), ylim=c(49,60.9), mar = c(0, 0, 0, 0))
+# 	 points(dsSPDF, col="black", bg="black", cex= 1.5, pch=19)
+# 	 maps:::map.scale(y=57, x=-1, ratio=FALSE, cex = 0.7, srt = 310)  
+# 	 north.arrow(xb=-0.2, yb=58, len=0.1, lab="N")
+#  dev.off()
 	 
